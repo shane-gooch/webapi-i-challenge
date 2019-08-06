@@ -22,14 +22,11 @@ function findById(id) {
 
 function insert(user) {
   console.log(user);
-  return (
-    db("users")
-      .insert(user)
-      // .then(ids => ({
-      //   id: ids[0]
-      // }));
-      .then(user)
-  );
+  return db("users")
+    .insert(user)
+    .then(ids => ({
+      id: ids[0]
+    }));
 }
 
 function update(id, user) {

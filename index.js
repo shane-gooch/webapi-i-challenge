@@ -40,15 +40,24 @@ server.get("/api/users/:id", (req, res) => {
 //Post
 server.post("/api/users", (req, res) => {
   const usersInfo = req.body;
+  if (!usersInfo.name || !usersInfo.bio) {
+    return res
+      .status(400)
+      .json({ message: "Provide provide a name and bio for the user" });
+  }
   Users.insert(usersInfo)
-    .then(user => {
-      if (user) {
-        res.status(201).json(user);
-      } else {
-        res
-          .status(400)
-          .json({ message: "Please provide name and bio for the user" });
-      }
+    .then(ids => {
+      console.log(ids);
+      Users.findById(ids.id).then(user => {
+        if (user) {
+          console.log(user);
+          res.status(201).json(user);
+        } else {
+          res.status(500).json({
+            message: "There was an error the user to the database"
+          });
+        }
+      });
     })
     .catch(err => {
       res.status(500).json({

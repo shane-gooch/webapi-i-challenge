@@ -16,10 +16,9 @@ function App() {
         setUsers(res.data);
       })
       .catch(err => console.log(err.response));
-  }, []);
+  }, [users]);
 
   const addUser = (e, formData) => {
-  
     e.preventDefault();
     axios.post("http://localhost:8000/api/users", formData).then(res => {
       const updatedUser = res.data;
@@ -30,6 +29,7 @@ function App() {
       });
     });
   };
+
   return (
     <div className="App">
       <h1>Users List</h1>
